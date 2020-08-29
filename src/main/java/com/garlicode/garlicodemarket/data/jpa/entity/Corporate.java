@@ -2,6 +2,8 @@ package com.garlicode.garlicodemarket.data.jpa.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity()
 public class Corporate {
@@ -11,6 +13,16 @@ public class Corporate {
     private String name;
     private String country;
     private String logo;
+    @ManyToOne
+    @JoinColumn(name = "currency_code")
+    private Currency currency;
+    @ManyToOne
+    @JoinColumn(name = "sector_id")
+    private Sector sector;
+    @ManyToOne
+    @JoinColumn(name = "industry_id")
+    private Industry industry;
+
 
     public Corporate() {
     }
@@ -45,5 +57,29 @@ public class Corporate {
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public Sector getSector() {
+        return sector;
+    }
+
+    public void setSector(Sector sector) {
+        this.sector = sector;
+    }
+
+    public Industry getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(Industry industry) {
+        this.industry = industry;
     }
 }
