@@ -82,4 +82,12 @@ public class Corporate {
     public void setIndustry(Industry industry) {
         this.industry = industry;
     }
+
+	@Override
+	public String toString() {
+		return "Corporate [ticker=" + ticker + ", name=" + name + ", country=" + country + ", logo=" + logo
+				+ ", currency=" + currency + ", sector=" + sector + ", industry=" + industry + "]";
+	}
+    
+    
 }

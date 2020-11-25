@@ -9,10 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/utils")
@@ -23,7 +20,7 @@ public class UtilsController {
     private UtilsService service;
 
     @PostMapping("/tickers-upload")
-    private ResponseEntity<Optional<Boolean>> uploadTickers(@RequestPart MultipartFile file) throws InterruptedException {
+    private ResponseEntity<Optional<Boolean>> uploadTickers(@RequestPart MultipartFile file) throws ResponseStatusException {
         try {
             String content = new String(file.getBytes()).trim();
             String[] tickers = content.split("[\n\r]");
@@ -33,7 +30,7 @@ public class UtilsController {
             this.service.uploadTickers(tickers);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE);
+            throw new ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Unreadable File");
         }
         return ResponseEntity.ok(Optional.of(true));
     }

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Service
 public class UtilsService {
@@ -15,11 +14,16 @@ public class UtilsService {
     @Autowired
     private CorporateService corporateService;
 
-    public void uploadTickers(String[] tickers) {
+    public void uploadTickers(String[] tickers)  {
         for (String ticker : tickers) {
             Optional<Corporate> corporate = this.corporateService.getCorporateByTicker(ticker);
-            if (corporate.isEmpty())
-                this.corporateService.addNewCorporate(ticker);
+            if (corporate.isEmpty()) {
+                try {
+                    this.corporateService.addNewCorporate(ticker);
+                } catch (Exception e) {
+                    // TO ADD LOGS LATER
+                }
+            }
         }
     }
 

@@ -6,79 +6,86 @@ import com.garlicode.garlicodemarket.data.jpa.entity.Sector;
 
 public interface DataProvider {
 
-    void execute();
+	void execute() throws Exception;
 
-    /*
-        Corporate Informations
-     */
-    String getTicker();
+	/*
+	 * Corporate Informations
+	 */
+	String getTicker();
 
-    String getName();
+	String getName();
 
-    String getCountry();
+	String getCountry();
 
-    String getLogo();
+	String getLogo();
 
-    Currency getCurrency();
+	Currency getCurrency();
 
-    Sector getSector();
+	Sector getSector();
 
-    Industry getIndustry();
+	Industry getIndustry();
 
-    /*
-        Corporate Financial Data
-     */
-    double getMarketCap();
+	/*
+	 * Corporate Financial Data
+	 */
+	long getMarketCap();
 
-    String getMarketCapFmt();
+	String getMarketCapFmt();
 
-    default double getPeRatio(){
-        return this.getEps() != 0 ? this.getPrice() / this.getEps() : 0;
-    }
+	default double getPeRatio() {
+		return this.getEps() != 0 ? this.getPrice() / this.getEps() : 0;
+	}
 
-    long getRevenue();
+	long getRevenue();
 
-    String getRevenueFmt();
+	String getRevenueFmt();
 
-    double getNetIncome();
+	double getNetIncome();
 
-    String getNetIncomeFmt();
+	String getNetIncomeFmt();
 
-    double getEps();
+	double getEps();
 
-    String getEpsFmt();
+	String getEpsFmt();
 
-    double getDividendRate();
+	double getDividendRate();
 
-    default double getDividendYield() {
-        return this.getPrice() != 0
-                ? this.getDividendRate() / this.getPrice()
-                : 0;
-    }
+	default double getDividendYield() {
+		return this.getPrice() != 0 ? (this.getCurrency() != null && this.getCurrency().getLabel() != null
+				&& this.getCurrency().getLabel().equals("GBp") ? this.getDividendRate() / (this.getPrice() / 100)
+						: this.getDividendRate() / this.getPrice())
+				: 0;
+	}
 
-    default double getProfitMargin(){
-        return this.getRevenue() != 0
-                ? this.getNetIncome() / this.getRevenue()
-                : 0;
-    }
+	default double getProfitMargin() {
+		return this.getRevenue() != 0 ? this.getNetIncome() / this.getRevenue() : 0;
+	}
 
-    default double getPayoutRatio() {
-        return this.getNetIncome() != 0
-                ? this.getDividendRate() * this.getSharesOutstanding() / this.getNetIncome()
-                : 0;
-    }
+	default double getPayoutRatio() {
+		return this.getNetIncome() != 0 ? this.getDividendRate() * this.getSharesOutstanding() / this.getNetIncome()
+				: 0;
+	}
 
-    double getPrice();
+	double getPrice();
 
-    long getSharesOutstanding();
+	long getSharesOutstanding();
 
-    String getSharesOutstandingFmt();
+	String getSharesOutstandingFmt();
 
-    double getDayLow();
+	double getDayLow();
 
-    double getDayHigh();
+	double getDayHigh();
 
-    double getYearLow();
+	double getYearLow();
 
-    double getYearHigh();
+	double getYearHigh();
+
+	long getTotalStockholderEquity();
+
+	long getTotalLiabilities();
+
+	default double getDebtToEquity() {
+		return this.getTotalLiabilities() != 0 ? this.getTotalLiabilities() / (double) this.getTotalStockholderEquity()
+				: Double.MAX_VALUE;
+	}
 }

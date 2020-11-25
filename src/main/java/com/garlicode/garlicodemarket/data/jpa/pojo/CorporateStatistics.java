@@ -1,8 +1,8 @@
 package com.garlicode.garlicodemarket.data.jpa.pojo;
 
-public class  CorporateStatistics {
+public class CorporateStatistics {
 
-    private double marketCap;
+    private long marketCap;
     private String marketCapFmt;
     private double peRatio;
     private long revenue;
@@ -22,15 +22,18 @@ public class  CorporateStatistics {
     private double dayHigh;
     private double yearLow;
     private double yearHigh;
+    private long totalStockholderEquity;
+    private long totalLiabilities;
+    private double debtToEquity;
 
     public CorporateStatistics() {
     }
 
-    public double getMarketCap() {
+    public long getMarketCap() {
         return marketCap;
     }
 
-    public void setMarketCap(double marketCap) {
+    public void setMarketCap(long marketCap) {
         this.marketCap = marketCap;
     }
 
@@ -185,4 +188,42 @@ public class  CorporateStatistics {
     public void setYearHigh(double yearHigh) {
         this.yearHigh = yearHigh;
     }
+
+    public long getTotalStockholderEquity() {
+        return totalStockholderEquity;
+    }
+
+    public void setTotalStockholderEquity(long totalStockholderEquity) {
+        this.totalStockholderEquity = totalStockholderEquity;
+    }
+
+    public long getTotalLiabilities() {
+        return totalLiabilities;
+    }
+
+    public void setTotalLiabilities(long totalLiabilities) {
+        this.totalLiabilities = totalLiabilities;
+    }
+
+    public double getDebtToEquity() {
+        return debtToEquity;
+    }
+
+    public void setDebtToEquity(double debtToEquity) {
+        this.debtToEquity = debtToEquity;
+    }
+
+	@Override
+	public String toString() {
+		return "CorporateStatistics [marketCap=" + marketCap + ", marketCapFmt=" + marketCapFmt + ", peRatio=" + peRatio
+				+ ", revenue=" + revenue + ", revenueFmt=" + revenueFmt + ", netIncome=" + netIncome + ", netIncomeFmt="
+				+ netIncomeFmt + ", eps=" + eps + ", epsFmt=" + epsFmt + ", dividendRate=" + dividendRate
+				+ ", dividendYield=" + dividendYield + ", profitMargin=" + profitMargin + ", payoutRatio=" + payoutRatio
+				+ ", price=" + price + ", sharesOutstanding=" + sharesOutstanding + ", sharesOutstandingFmt="
+				+ sharesOutstandingFmt + ", dayLow=" + dayLow + ", dayHigh=" + dayHigh + ", yearLow=" + yearLow
+				+ ", yearHigh=" + yearHigh + ", totalStockholderEquity=" + totalStockholderEquity
+				+ ", totalLiabilities=" + totalLiabilities + ", debtToEquity=" + debtToEquity + "]";
+	}
+    
+    
 }
